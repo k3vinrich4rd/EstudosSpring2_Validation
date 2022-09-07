@@ -26,7 +26,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @Autowired
-    private IClienteRepository clienteRepository;
+    private IClienteRepository iClienteRepository;
 
     @PostMapping
     public ResponseEntity<ClienteModel> cadastrarCliente(@RequestBody @Valid ClienteModel clienteModel) {
@@ -47,6 +47,33 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.exibirClienteViaId(id));
     }
 
+    //Query Method (Método de consulta)
+    @GetMapping(path = "/anoNascimento/{anoNascimento}")
+    public ResponseEntity<List<ClienteModel>> exibirDataDeNascimentoCliente(@PathVariable Long anoNascimento){
+        return ResponseEntity.ok(iClienteRepository.findByAnoNascimento(anoNascimento));
+    }
+
+    //Query Method (Método de consulta)
+    @GetMapping(path = "/emailCliente/{emailCliente}")
+    public ResponseEntity<List<ClienteModel>> exibirEmailCliente(@PathVariable String emailCliente){
+        return ResponseEntity.ok(iClienteRepository.findByEmailCliente(emailCliente));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @PutMapping(path = "/{id}")
     public ResponseEntity<ClienteModel> alterarClienteViaId(@RequestBody ClienteModel clienteModel) {
         return ResponseEntity.ok(clienteService.alterarClienteCadastrado(clienteModel));
@@ -55,7 +82,7 @@ public class ClienteController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Retorna o 204
     public ResponseEntity deletar(@PathVariable Long id) {
-        if (!clienteRepository.existsById(id)) {
+        if (!iClienteRepository.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: id não encontrado");
 
         }

@@ -11,4 +11,8 @@ import java.util.List;
 public interface IClienteRepository extends JpaRepository<ClienteModel, Long> {
     @Query("select c from ClienteModel c")
     public List<ClienteModel> getTodosDadosClientes();
+
+    public List<ClienteModel> findByAnoNascimento(Long anoNascimento);
+
+    public List<ClienteModel> findByEmailCliente(String emailCliente);
 }

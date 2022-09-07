@@ -40,4 +40,5 @@ public class ClienteService {
     public List<ClienteModel> getTodosDadosClientes(){
         return iClienteRepository.getTodosDadosClientes();
     }
+
 }
