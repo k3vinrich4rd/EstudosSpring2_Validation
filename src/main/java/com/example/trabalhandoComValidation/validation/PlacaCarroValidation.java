@@ -1,6 +1,6 @@
 package com.example.trabalhandoComValidation.validation;
 
-import com.example.trabalhandoComValidation.validationcontrains.PlacaCarro;
+import com.example.trabalhandoComValidation.validation.validationcontrains.PlacaCarro;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

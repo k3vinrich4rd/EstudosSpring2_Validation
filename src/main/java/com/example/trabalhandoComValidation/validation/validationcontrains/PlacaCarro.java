@@ -1,4 +1,4 @@
-package com.example.trabalhandoComValidation.validationcontrains;
+package com.example.trabalhandoComValidation.validation.validationcontrains;
 
 import com.example.trabalhandoComValidation.validation.PlacaCarroValidation;
 
@@ -14,12 +14,10 @@ import java.lang.annotation.*;
 public @interface PlacaCarro { //Se coloca o @Interface para a ide entender que se trata de uma anotação
 
     String message() default "Placa de carro inválida"; // Mensagem que vai aparecer para o usuário
-    Class<?> [] groups() default {}; // Padrão da validação
-    Class<? extends Payload> [] payload() default {}; // Padrão da validação
 
+    Class<?>[] groups() default {}; // Padrão da validação
 
-
-
+    Class<? extends Payload>[] payload() default {}; // Padrão da validação
 
 
 }

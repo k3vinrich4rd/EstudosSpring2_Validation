@@ -1,6 +1,6 @@
 package com.example.trabalhandoComValidation.model;
 
-import com.example.trabalhandoComValidation.validationcontrains.PlacaCarro;
+import com.example.trabalhandoComValidation.validation.validationcontrains.PlacaCarro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
