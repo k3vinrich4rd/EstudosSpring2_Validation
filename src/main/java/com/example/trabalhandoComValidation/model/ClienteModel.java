@@ -26,24 +26,24 @@ public class ClienteModel {
     private Long id;
 
     @Column(name = "nome_cliente", length = 50, nullable = false)
-    @NotBlank(message = "Erro, campo não informado") //Não aceita valores em brancos e nulos
+    @NotBlank(message = "Erro, nome do cliente não informado") //Não aceita valores em brancos e nulos
     @Pattern(regexp = "^[A-Z]+(.)*", message = "Erro, o campo nome deve iniciar com uma letra maiúscula")
     //Garante que a primeira letra do nome do meu cliente seja maiúscula
     private String nomeCliente;
 
     @Column(name = "email_client", length = 50, nullable = false)
     @Email(message = "Erro, email inválido")
-    @NotBlank(message = "Erro, campo não informado")
+    @NotBlank(message = "Erro, e-mail não informado")
     private String emailCliente;
 
     @Column(name = "cpf_cliente", length = 14, nullable = false)
     @CPF(message = "Cpf inválido")
-    @NotBlank(message = "Erro, campo não informado")
+    @NotBlank(message = "Erro, cpf não informado")
     private String cpfCliente;
 
     @Column(name = "placa_de_carro_cliente", length = 50, nullable = false)
     @PlacaCarro(message = "Placa inválida")
-    @NotBlank(message = "Erro, campo não informado")
+    @NotBlank(message = "Erro, placa do carro informada")
     private String placaCarro;
 
     @Column(name = "ano_nascimento_cliente", length = 4, nullable = false)
