@@ -1,6 +1,7 @@
 package com.example.trabalhandoComValidation.controller;
 
 import com.example.trabalhandoComValidation.model.ClienteModel;
+import com.example.trabalhandoComValidation.model.Dto.ClienteModelDto;
 import com.example.trabalhandoComValidation.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/clientes")
@@ -28,9 +30,12 @@ public class ClienteController {
         return new ResponseEntity<>(cliente, HttpStatus.CREATED); // Retorna 201
     }
 
+    //Dto:
     @GetMapping
-    public ResponseEntity<List<ClienteModel>> exibirClientesCadastrados() {
-        return ResponseEntity.ok(clienteService.exibirClientesCadastrados());
+    public ResponseEntity<List<ClienteModelDto>> exibirClientesCadastrados() {
+        List<ClienteModel> list = clienteService.exibirClientesCadastrados();
+        List<ClienteModelDto> listClienteDto = list.stream().map(obj -> new ClienteModelDto(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listClienteDto);
     }
 
     @GetMapping(path = "/{id}")
@@ -48,6 +53,8 @@ public class ClienteController {
         clienteService.deletarCliente(id);
     }
 
+
+    //Tratamento de mensagens de erro:
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {

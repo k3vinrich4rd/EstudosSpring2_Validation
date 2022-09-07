@@ -1,6 +1,7 @@
 package com.example.trabalhandoComValidation.service;
 
 import com.example.trabalhandoComValidation.model.ClienteModel;
+import com.example.trabalhandoComValidation.model.Dto.ClienteModelDto;
 import com.example.trabalhandoComValidation.repository.IClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
