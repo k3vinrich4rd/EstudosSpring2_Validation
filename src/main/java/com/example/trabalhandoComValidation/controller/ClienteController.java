@@ -2,6 +2,7 @@ package com.example.trabalhandoComValidation.controller;
 
 import com.example.trabalhandoComValidation.model.ClienteModel;
 import com.example.trabalhandoComValidation.model.Dto.ClienteModelDto;
+import com.example.trabalhandoComValidation.repository.IClienteRepository;
 import com.example.trabalhandoComValidation.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private IClienteRepository clienteRepository;
 
     @PostMapping
     public ResponseEntity<ClienteModel> cadastrarCliente(@RequestBody @Valid ClienteModel clienteModel) {
@@ -49,10 +53,21 @@ public class ClienteController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deletarClienteCadastrado(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Retorna o 204
+    public ResponseEntity deletar(@PathVariable Long id) {
+        if (!clienteRepository.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: id não encontrado");
+
+        }
         clienteService.deletarCliente(id);
+        return null;
     }
 
+    //Query
+    @GetMapping(path = "/find-all")
+    public ResponseEntity<List<ClienteModel>> exibirTodosDadosDosClientes() {
+        return ResponseEntity.ok(clienteService.getTodosDadosClientes());
+    }
 
     //Tratamento de mensagens de erro:
     @ResponseStatus(HttpStatus.BAD_REQUEST)

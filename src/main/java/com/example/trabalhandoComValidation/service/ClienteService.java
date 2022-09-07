@@ -35,4 +35,9 @@ public class ClienteService {
     public void deletarCliente(Long id) {
         iClienteRepository.deleteById(id);
     }
+
+    //Query
+    public List<ClienteModel> getTodosDadosClientes(){
+        return iClienteRepository.getTodosDadosClientes();
+    }
 }
