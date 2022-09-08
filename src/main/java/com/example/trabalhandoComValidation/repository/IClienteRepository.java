@@ -12,7 +12,14 @@ public interface IClienteRepository extends JpaRepository<ClienteModel, Long> {
     @Query("select c from ClienteModel c")
     public List<ClienteModel> getTodosDadosClientes();
 
+    //Query methods:
     public List<ClienteModel> findByAnoNascimento(Long anoNascimento);
 
     public List<ClienteModel> findByEmailCliente(String emailCliente);
+
+    public boolean existsByCpfCliente(String cpfCliente);
+
+    public boolean existsByEmailCliente(String emailCliente);
+
+    public boolean existsByPlacaCarro(String placaCarro);
 }

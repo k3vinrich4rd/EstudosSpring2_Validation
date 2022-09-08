@@ -28,10 +28,19 @@ public class ClienteController {
     @Autowired
     private IClienteRepository iClienteRepository;
 
+
+    //Validação para cadastrar
     @PostMapping
-    public ResponseEntity<ClienteModel> cadastrarCliente(@RequestBody @Valid ClienteModel clienteModel) {
-        ClienteModel cliente = clienteService.cadastrarCliente(clienteModel);
-        return new ResponseEntity<>(cliente, HttpStatus.CREATED); // Retorna 201
+    public ResponseEntity<Object> cadastrarCliente(@RequestBody @Valid ClienteModel clienteModel) {
+        if (clienteService.existsByCpfCliente(clienteModel.getCpfCliente())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: Cpf já cadastrado");
+        } else if (clienteService.existsByEmailCliente(clienteModel.getEmailCliente())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: E-mail já cadastrado");
+        } else if (clienteService.existsByPlacaDeCarro(clienteModel.getPlacaCarro())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: Placa de carro já cadastrada");
+
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.cadastrarCliente(clienteModel));
     }
 
     //Dto:
@@ -49,29 +58,15 @@ public class ClienteController {
 
     //Query Method (Método de consulta)
     @GetMapping(path = "/anoNascimento/{anoNascimento}")
-    public ResponseEntity<List<ClienteModel>> exibirDataDeNascimentoCliente(@PathVariable Long anoNascimento){
+    public ResponseEntity<List<ClienteModel>> exibirDataDeNascimentoCliente(@PathVariable Long anoNascimento) {
         return ResponseEntity.ok(iClienteRepository.findByAnoNascimento(anoNascimento));
     }
 
     //Query Method (Método de consulta)
     @GetMapping(path = "/emailCliente/{emailCliente}")
-    public ResponseEntity<List<ClienteModel>> exibirEmailCliente(@PathVariable String emailCliente){
+    public ResponseEntity<List<ClienteModel>> exibirEmailCliente(@PathVariable String emailCliente) {
         return ResponseEntity.ok(iClienteRepository.findByEmailCliente(emailCliente));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @PutMapping(path = "/{id}")

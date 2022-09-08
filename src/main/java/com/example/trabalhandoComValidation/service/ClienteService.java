@@ -1,7 +1,6 @@
 package com.example.trabalhandoComValidation.service;
 
 import com.example.trabalhandoComValidation.model.ClienteModel;
-import com.example.trabalhandoComValidation.model.Dto.ClienteModelDto;
 import com.example.trabalhandoComValidation.repository.IClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ public class ClienteService {
         return iClienteRepository.save(clienteModel);
     }
 
+    //DTO
     public List<ClienteModel> exibirClientesCadastrados() {
         return iClienteRepository.findAll();
     }
@@ -36,9 +36,23 @@ public class ClienteService {
         iClienteRepository.deleteById(id);
     }
 
-    //Query
-    public List<ClienteModel> getTodosDadosClientes(){
+    //Query (anotação)
+    public List<ClienteModel> getTodosDadosClientes() {
         return iClienteRepository.getTodosDadosClientes();
+    }
+
+    //Query methods
+    public boolean existsByCpfCliente(String cpfCliente) {
+        return iClienteRepository.existsByCpfCliente(cpfCliente);
+
+    }
+
+    public boolean existsByEmailCliente(String emailCliente) {
+        return iClienteRepository.existsByEmailCliente(emailCliente);
+    }
+
+    public boolean existsByPlacaDeCarro(String placaDeCarro) {
+        return iClienteRepository.existsByPlacaCarro(placaDeCarro);
     }
 
 }
