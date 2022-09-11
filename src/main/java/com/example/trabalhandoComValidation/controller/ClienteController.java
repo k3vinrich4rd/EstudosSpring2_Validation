@@ -87,7 +87,7 @@ public class ClienteController {
         return null;
     }
 
-    //Query
+    //Query (anotação)
     @GetMapping(path = "/find-all")
     public ResponseEntity<List<ClienteModel>> exibirTodosDadosDosClientes() {
         return ResponseEntity.ok(clienteService.getTodosDadosClientes());
