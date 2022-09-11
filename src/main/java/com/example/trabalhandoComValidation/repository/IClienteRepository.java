@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface IClienteRepository extends JpaRepository<ClienteModel, Long> {
+    //Query (anotação)
     @Query("select c from ClienteModel c")
     public List<ClienteModel> getTodosDadosClientes();
 

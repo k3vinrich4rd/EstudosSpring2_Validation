@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@Validated // Avisa que as validações que estão dentro dessa classe
 @RequestMapping(path = "/clientes")
 public class ClienteController {
 
@@ -31,7 +33,7 @@ public class ClienteController {
 
     //Validação para cadastrar
     @PostMapping
-    public ResponseEntity<Object> cadastrarCliente(@RequestBody @Valid ClienteModel clienteModel) {
+    public ResponseEntity<Object> cadastrarCliente(@Valid @RequestBody ClienteModel clienteModel) {
         if (clienteService.existsByCpfCliente(clienteModel.getCpfCliente())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: Cpf já cadastrado");
         } else if (clienteService.existsByEmailCliente(clienteModel.getEmailCliente())) {
@@ -70,7 +72,7 @@ public class ClienteController {
 
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ClienteModel> alterarClienteViaId(@RequestBody ClienteModel clienteModel) {
+    public ResponseEntity<ClienteModel> alterarClienteViaId(@Valid @RequestBody ClienteModel clienteModel) {
         return ResponseEntity.ok(clienteService.alterarClienteCadastrado(clienteModel));
     }
 
@@ -91,19 +93,6 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.getTodosDadosClientes());
     }
 
-    //Tratamento de mensagens de erro:
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
 
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-
-        return errors;
-    }
 
 }

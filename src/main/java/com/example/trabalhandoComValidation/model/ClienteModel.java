@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +20,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @Entity
 @Table(name = "clientes_validação")
+@Validated
 public class ClienteModel {
 
     @Id
